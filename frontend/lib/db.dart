@@ -16,4 +16,9 @@ class DB {
       {String db = Config.dbName, dynamic defaultValue = 0}) {
     return Hive.box(db).get(keyName, defaultValue: defaultValue);
   }
+
+  static Future<void> setValue(keyName, value,
+      {String db = Config.dbName}) async {
+    await Hive.box(db).put(keyName, value);
+  }
 }
