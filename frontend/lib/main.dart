@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/db.dart';
 import './main_screen.dart';
 
-void main() {
+void main() async {
+  await DB.initialize();
   runApp(const HordeArt());
 }
 

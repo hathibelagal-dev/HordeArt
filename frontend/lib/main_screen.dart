@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/generate_page.dart';
-import 'package:frontend/reference_page.dart';
-import 'package:frontend/settings_page.dart';
-import 'package:frontend/status_page.dart';
+import 'package:frontend/config.dart';
+import 'package:frontend/pages/generate_page.dart';
+import 'package:frontend/pages/reference_page.dart';
+import 'package:frontend/pages/settings_page.dart';
+import 'package:frontend/pages/status_page.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class MainScreen extends StatefulWidget {
   final String title;
@@ -29,7 +31,7 @@ class _MainScreenState extends State<MainScreen> {
   int _currentPage = 0;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    
     return Scaffold(
       appBar: _currentPage != 0 ? AppBar(title: Text(widget.title)) : null,
       body: _pages?[_currentPage] ?? const Center(),

@@ -9,9 +9,7 @@ class HordeHTTPClient {
 
   static Future<dynamic> getJSON(String url) async {
     Uri uri = Uri.parse(url);
-    Map<String, String> headers = {
-      "Client-Agent": Config.clientAgent
-    };
+    Map<String, String> headers = {"Client-Agent": Config.clientAgent};
     http.Response response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
       try {

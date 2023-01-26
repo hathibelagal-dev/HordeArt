@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/completed_jobs_page.dart';
-import 'package:frontend/new_job_page.dart';
-import 'package:frontend/pending_jobs_page.dart';
+import 'package:frontend/pages/completed_jobs_page.dart';
+import 'package:frontend/pages/new_job_page.dart';
+import 'package:frontend/pages/pending_jobs_page.dart';
 
 class GeneratePage extends StatefulWidget {
   final String title;
