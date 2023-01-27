@@ -55,11 +55,10 @@ class _PendingJobsPageState extends State<PendingJobsPage> {
     for (String job in _pendingJobs) {
       JobStatus status = await handler.getJobStatus(job);
       if (status.done) {
-        if(status.valid) {
+        if (status.valid) {
           await addCompletedJob(job);
           await removePendingJob(job);
         } else {
-          print("Removing because invalid");
           await removePendingJob(job);
         }
       }
@@ -73,9 +72,7 @@ class _PendingJobsPageState extends State<PendingJobsPage> {
   }
 
   Future<void> addCompletedJob(String job) async {
-    String completed = DB.getValue("completed");
-    completed += "," + job;
-    await DB.setValue("completed", completed);
+    await handler.downloadImage(job);
   }
 
   Future<void> removePendingJob(String job) async {
@@ -85,7 +82,6 @@ class _PendingJobsPageState extends State<PendingJobsPage> {
         .where((element) => element != job)
         .toList()
         .join(",");
-    print(pending);
     await DB.setValue("pending", pending);
   }
 }

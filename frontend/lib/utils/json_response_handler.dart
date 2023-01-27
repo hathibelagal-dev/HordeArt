@@ -29,7 +29,7 @@ class JSONResponseHandler {
     dynamic data =
         await HordeHTTPClient.getJSON("${Config.asyncStatusCheck}/$job");
     if (data is Map) {
-      if(data.containsKey("done")) {
+      if (data.containsKey("done")) {
         return JobStatus(data["done"], true);
       } else {
         return JobStatus(true, false);
@@ -39,7 +39,7 @@ class JSONResponseHandler {
   }
 
   Future<bool> generateImage(String prompt, String negativePrompts,
-      String sampler, String seed, String postProcessor, String model) async {      
+      String sampler, String seed, String postProcessor, String model) async {
     negativePrompts = negativePrompts
         .split(",")
         .map((n) {
@@ -72,7 +72,9 @@ class JSONResponseHandler {
   }
 
   Future<void> downloadImage(String job) async {
-    dynamic data = await HordeHTTPClient.getJSON(Config.fullImageStatus);
+    dynamic data =
+        await HordeHTTPClient.getJSON("${Config.fullImageStatus}/$job");
+    print(data);
     if (data is Map && data["generations"].length > 0) {
       Map<String, dynamic> item = data["generations"][0];
       ImageResult result = ImageResult(item["img"], item["id"]);
