@@ -5,6 +5,8 @@ class Config {
   static const String baseURL = "https://stablehorde.net/api/v2";
   static const String modelDetails = "$baseURL/status/models";
   static const String asyncGenerateImage = "$baseURL/generate/async";
+  static const String asyncStatusCheck = "$baseURL/generate/check";
+  static const String fullImageStatus = "$baseURL/generate/status";
 
   static const String defaultModel = "stable_diffusion";
   static const String defaultSampler = "k_lms";

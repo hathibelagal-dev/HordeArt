@@ -1,6 +1,9 @@
 import 'dart:convert' show json, jsonDecode, utf8;
+import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../config.dart';
 
@@ -20,6 +23,20 @@ class HordeHTTPClient {
       }
     }
     return {};
+  }
+
+  static Future<bool> saveWebP(String url, String id) async {
+    Uri uri = Uri.parse(url);
+    http.Response response = await http.get(uri);
+    try {
+      File f =
+          File("${(await getApplicationDocumentsDirectory()).path}/$id.webp");
+      await f.writeAsBytes(response.bodyBytes);
+      return true;
+    } catch (e) {
+      logger.e(e);
+      return false;
+    }
   }
 
   static Future<dynamic> postJSON(String url, Map<String, dynamic> body) async {

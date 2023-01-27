@@ -1,21 +1,11 @@
 import 'package:frontend/config.dart';
 import 'package:frontend/db.dart';
+import 'package:frontend/models/image_result.dart';
+import 'package:frontend/models/job_status.dart';
 import 'package:logger/logger.dart';
 
 import './horde_http_client.dart';
-
-class ActiveModel {
-  String? name;
-  int? queued;
-  int? eta;
-  int? count;
-  ActiveModel({this.name, this.queued, this.eta, this.count});
-
-  @override
-  String toString() {
-    return "$name ($count)";
-  }
-}
+import '../models/active_model.dart';
 
 class JSONResponseHandler {
   static Logger logger = Logger();
@@ -33,6 +23,19 @@ class JSONResponseHandler {
       }
     }
     return output;
+  }
+
+  Future<JobStatus> getJobStatus(String job) async {
+    dynamic data =
+        await HordeHTTPClient.getJSON("${Config.asyncStatusCheck}/$job");
+    if (data is Map) {
+      if(data.containsKey("done")) {
+        return JobStatus(data["done"], true);
+      } else {
+        return JobStatus(true, false);
+      }
+    }
+    return JobStatus(false, false);
   }
 
   Future<bool> generateImage(String prompt, String negativePrompts,
@@ -66,5 +69,19 @@ class JSONResponseHandler {
     }
     logger.e("Couldn't start job");
     return false;
+  }
+
+  Future<void> downloadImage(String job) async {
+    dynamic data = await HordeHTTPClient.getJSON(Config.fullImageStatus);
+    if (data is Map && data["generations"].length > 0) {
+      Map<String, dynamic> item = data["generations"][0];
+      ImageResult result = ImageResult(item["img"], item["id"]);
+      bool success = await HordeHTTPClient.saveWebP(result.url, result.id);
+      if (success) {
+        logger.i("Image saved successfully");
+      } else {
+        logger.e("Could not save image");
+      }
+    }
   }
 }

@@ -13,7 +13,7 @@ class DB {
   }
 
   static dynamic getValue(keyName,
-      {String db = Config.dbName, dynamic defaultValue = 0}) {
+      {String db = Config.dbName, dynamic defaultValue = ""}) {
     return Hive.box(db).get(keyName, defaultValue: defaultValue);
   }
 

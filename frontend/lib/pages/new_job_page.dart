@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import '../config.dart';
 import '../db.dart';
+import '../models/active_model.dart';
 
 class NewJobsPage extends StatefulWidget {
   const NewJobsPage({Key? key}) : super(key: key);
