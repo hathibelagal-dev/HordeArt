@@ -39,7 +39,7 @@ class JSONResponseHandler {
   }
 
   Future<bool> generateImage(String prompt, String negativePrompts,
-      String sampler, String seed, String postProcessor, String model) async {
+      String sampler, String seed, String postProcessor, String model) async {      
     negativePrompts = negativePrompts
         .split(",")
         .map((n) {

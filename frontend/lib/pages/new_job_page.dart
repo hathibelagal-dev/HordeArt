@@ -31,6 +31,8 @@ class _NewJobsPageState extends State<NewJobsPage> {
   @override
   void initState() {
     super.initState();
+    _negativePromptController.text = "ugly, blurry, duplicate";
+    _promptController.text = "portrait of a ";
     _seedController.text =
         (pow(2, 48) * Random().nextDouble()).toStringAsFixed(0);
     handler.getActiveModels().then((value) {
